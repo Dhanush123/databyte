@@ -1,0 +1,63 @@
+<div id="map"></div>
+<!-- Replace the value of the key parameter with your own API key. -->
+<script async defer
+src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCkUOdZ5y7hMm0yrcCQoCvLwzdM6M8s5qk&callback=initMap">
+</script>
+<script>
+// The following example creates complex markers to indicate beaches near
+// Sydney, NSW, Australia. Note that the anchor is set to (0,32) to correspond
+// to the base of the flagpole.
+
+function initMap() {
+  var map = new google.maps.Map(document.getElementById('map'), {
+    zoom: 18.29,
+    center: {lat: 37.8723764, lng: -122.2588801}
+  });
+
+  setMarkers(map);
+}
+
+// Data for the markers consisting of a name, a LatLng and a zIndex for the
+// order in which these markers should display on top of each other.
+var beaches = [
+  ['Adam', 37.8733542,-122.2592102, 1],
+  ['Susan', 37.8727731,-122.2593587, 2],
+];
+
+function setMarkers(map) {
+  // Adds markers to the map.
+
+  // Marker sizes are expressed as a Size of X,Y where the origin of the image
+  // (0,0) is located in the top left of the image.
+
+  // Origins, anchor positions and coordinates of the marker increase in the X
+  // direction to the right and in the Y direction down.
+  var image = {
+    url: 'https://lh3.googleusercontent.com/0j2Wqw0aK-adQWn2dHX0ycFKo7EecNVYvaebee8acjTmx_uJWSXcZnOQ0jYZoCOBpg4rqDtY2g0fXetleHrFmNKad9KIqcMxmChKpfFAilNwe7C7GEaHQGpMgbcym-hdeknRwHs_ehGtj03wfD_iIJvyNmJx4f814-KlejPK2TykdS1inOKBO2fGpWUG1bJ00YO0l7RjGDH_uwhnPNYbiYAFGa2-tMm31IU38pvZDqre6-Go9xGrUA6Tg4AHpovQ4SVHgbiDSXfIwPcH1451Fg5T9lLhBmmmQs0GxBxS1yhWfIsuANRIT1Agj0ZC-HvCaiA3c8XyNUp-ui8ak-FvsmqHgWdYj8G6QVxE7y6-4sfA1ZhNrxiy0_xxpp3fNDF4TY4xVsu9ZrJuzHh2DhknBFOrEJ_EBvllJEH8ySZLftb30HDn7AoDyEdj_GPp-3jesWS9iagB1hotzg3TmPfvB5d1QtDGYAJsMgaPnF_NQ3aD-ZnBQSleAlM6ejZUHnRsrydkZPzo3m9PXlQpffQ-GUn3ScNVA5bjXV6DqngR-maa2ixXdwi7UlXVbVmVj2juS3XaCRLk7XTpfPV0-dpsyTdJhRgZP8M0IWHjynOUGoM9ajQWkposjGyH776CBhV2zU24V4FrccDwsua1sWT5kslrpA=w53-h50-no',
+    // This marker is 20 pixels wide by 32 pixels high.
+    size: new google.maps.Size(50,50),
+    // The origin for this image is (0, 0).
+    origin: new google.maps.Point(0, 0),
+    // The anchor for this image is the base of the flagpole at (0, 32).
+    anchor: new google.maps.Point(0, 32)
+  };
+  // Shapes define the clickable region of the icon. The type defines an HTML
+  // <area> element 'poly' which traces out a polygon as a series of X,Y points.
+  // The final coordinate closes the poly by connecting to the first coordinate.
+  var shape = {
+    coords: [1, 1, 1, 20, 18, 20, 18, 1],
+    type: 'poly'
+  };
+  for (var i = 0; i < beaches.length; i++) {
+    var beach = beaches[i];
+    var marker = new google.maps.Marker({
+      position: {lat: beach[1], lng: beach[2]},
+      map: map,
+      icon: image,
+      shape: shape,
+      title: beach[0],
+      zIndex: beach[3]
+    });
+  }
+}
+</script>
